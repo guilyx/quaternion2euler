@@ -128,16 +128,13 @@ function updateHistory(input, result) {
     historyList.insertBefore(newItem, historyList.firstChild);
 }
 
-// Attach event listeners to the convert button and units radio buttons
-document.getElementById("quaternionConvertButton").addEventListener("click", updateResultFromButton);
-document.getElementById("eulerConvertButton").addEventListener("click", updateResultFromButton);
-document.getElementById("resetToZero").addEventListener("click", function() {
+function resetToZero() {
     document.getElementById("xSlider").value = 0.0;
     document.getElementById("wSlider").value = 1.0;
     document.getElementById("ySlider").value = 0.0;
     document.getElementById("zSlider").value = 0.0;
     document.getElementById("pitchSlider").value = 0.0;
-    document.getElementById("yawSlideupdateResultr").value = 0.0;
+    document.getElementById("yawSlider").value = 0.0;
     document.getElementById("rollSlider").value = 0.0;
     document.getElementById("w").value = 1.0;
     document.getElementById("x").value = 0.0;
@@ -146,7 +143,33 @@ document.getElementById("resetToZero").addEventListener("click", function() {
     document.getElementById("roll").value = 0.0;
     document.getElementById("pitch").value = 0.0;
     document.getElementById("yaw").value = 0.0;
+}
+
+// Attach event listeners to the convert button and units radio buttons
+document.getElementById("quaternionConvertButton").addEventListener("click", updateResultFromButton);
+document.getElementById("eulerConvertButton").addEventListener("click", updateResultFromButton);
+document.getElementById("resetToZero").addEventListener("click", resetToZero);
+
+document.getElementById("degreesRadio").addEventListener("click", function() {
+    document.getElementById("pitchSlider").max = 180.0;
+    document.getElementById("yawSlider").max = 180.0;
+    document.getElementById("rollSlider").max = 180.0;
+    document.getElementById("pitchSlider").min = -180.0;
+    document.getElementById("yawSlider").min = -180.0;
+    document.getElementById("rollSlider").min = -180.0;
+    resetToZero();
 });
+
+document.getElementById("radiansRadio").addEventListener("click", function() {
+    document.getElementById("pitchSlider").max = Math.PI.toPrecision(PRECISION);
+    document.getElementById("yawSlider").max = Math.PI.toPrecision(PRECISION);
+    document.getElementById("rollSlider").max = Math.PI.toPrecision(PRECISION);
+    document.getElementById("pitchSlider").min = -Math.PI.toPrecision(PRECISION);
+    document.getElementById("yawSlider").min = -Math.PI.toPrecision(PRECISION);
+    document.getElementById("rollSlider").min = -Math.PI.toPrecision(PRECISION);
+    resetToZero();
+});
+
 
 document.getElementById("x").addEventListener("input", function() {
   document.getElementById("xSlider").value = document.getElementById("x").value;
